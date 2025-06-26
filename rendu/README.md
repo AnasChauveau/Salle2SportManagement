@@ -42,8 +42,8 @@ Cette stratégie vise à garantir la **fiabilité**, la **robustesse** et la **s
 
 ### Tests end-to-end (E2E)
 - **Quoi** : Scénarios utilisateur critiques, par rôle :
-- **Utilisateur** : Connexion / Déconnexion, création / annulation de réservation, affichage du dashboard, vérification de l'abonnement, consultation de l'historique
-- **Administrateur** : Accès au dashboard admin, création / suppression de cours, gestion des utilisateurs et abonnements
+    - **Utilisateur** : Connexion / Déconnexion, création / annulation de réservation, affichage du dashboard, vérification de l'abonnement, consultation de l'historique
+    - **Administrateur** : Accès au dashboard admin, création / suppression de cours, gestion des utilisateurs et abonnements
 - **Pourquoi** : S'assurer que l'application est fonctionnelle dans des scénarios réels et complets, incluant l'UI et l'API.
 - **Outils** : Playwright ou Cypress avec fixtures ou seed de données
 - **Exclusions** : Pages sans interactions critiques ni actions utilisateur (ex : mentions légales, CGU, pages d'accueil informatives)
