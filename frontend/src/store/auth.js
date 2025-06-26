@@ -8,13 +8,14 @@ export const useAuthStore = defineStore('auth', () => {
   const isAdmin = computed(() => currentUser.value?.role === 'ADMIN')
 
   const login = async (email) => {
+    if (!email) {
+      throw new Error('Email is required')
+    }
     try {
       const response = await apiClient.post('/auth/login', { email })
       currentUser.value = response.data.user
-      
       // Store in localStorage
       localStorage.setItem('currentUser', JSON.stringify(response.data.user))
-      
       return response.data
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Login failed')

@@ -1,3 +1,4 @@
+
 const subscriptionRepository = require('../repositories/subscriptionRepository');
 const userService = require('./userService');
 
@@ -34,7 +35,6 @@ class SubscriptionService {
   async updateSubscription(id, subscriptionData) {
     // Check if subscription exists
     await this.getSubscriptionById(id);
-
     return await subscriptionRepository.update(id, subscriptionData);
   }
 
@@ -55,23 +55,25 @@ class SubscriptionService {
 
   calculateMonthlyBilling(subscription, noShowCount = 0) {
     let basePrice = this.getSubscriptionPrice(subscription.planType);
-    
     // Réduction si abonnement > 6 mois
     const subscriptionDuration = Math.floor(
       (new Date() - new Date(subscription.startDate)) / (1000 * 60 * 60 * 24 * 30)
     );
-    
     if (subscriptionDuration > 6) {
       basePrice *= 0.9; // 10% de réduction
     }
-
     // Majoration si plus de 5 no-show par mois
     if (noShowCount > 5) {
       basePrice *= 1.15; // 15% de majoration
     }
-
     return Math.round(basePrice * 100) / 100;
   }
 }
 
-module.exports = new SubscriptionService();
+const instance = new SubscriptionService();
+// Ajout de la méthode dynamique pour les tests unitaires
+instance.checkActive = async function(userId) {
+  const sub = await subscriptionRepository.findByUserId(userId);
+  return !!(sub && sub.active);
+};
+module.exports = instance;
